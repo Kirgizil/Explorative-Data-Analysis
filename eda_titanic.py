@@ -25,7 +25,7 @@ from matplotlib.patches import Rectangle
 
 
 ## read in csv file
-df = pd.read_csv('train.csv')
+df = pd.read_csv('../train.csv')
 
 
 ## Feature Engineering: Title
@@ -384,13 +384,13 @@ pd.set_option('max_columns', None)
 
 
 ## population versus sample StDev
-x = 'Number'
+# x = 'Number'
 
-s = df[x].std()
+# s = df[x].std()
 # print(s)
-pop = (df[x].std(ddof=0))
+# pop = (df[x].std(ddof=0))
 
-SE = s / math.sqrt(211)#len(df[x]))
+# SE = s / math.sqrt(211)#len(df[x]))
 # print(SE)
 
 
@@ -436,179 +436,197 @@ SE = s / math.sqrt(211)#len(df[x]))
 
 
 
-# creating histogram and violin subplots of numerical data
-# sns.set_theme(style="whitegrid")
-# plt.figure(figsize=(17, 12))
+## creating histogram and violin subplots of numerical data
+sns.set_theme(style="whitegrid")
+plt.figure(figsize=(17, 12))
 
-# plt.subplot(2, 2, 1)
-# ax = sns.histplot(df['Fare'], bins=200, kde=True, color='darkblue', alpha=1)
-# ax.lines[0].set_color('crimson')
-# ax.lines[0].set_linewidth(3)
-# ax.lines[0].set_alpha(.75)
-# ax.plot(linewidth=7.0)
-# ax.legend(('probability density function', 'measures'), loc='upper right', shadow=True, prop={'size': 20})
-# plt.xticks(range(0, 550, 100))
-# plt.xticks(fontsize=0)
-# plt.yticks(fontsize=14)
-# plt.xlabel(None)#'British Pound [£]', fontsize=16)
-# plt.ylabel("Count", fontsize=16, labelpad=10)
-# plt.xlim([-50, 550])
-# plt.ylim([0, 275])
+plt.subplot(2, 2, 1)
+ax = sns.histplot(df['Fare'], bins=200, kde=True, color='darkblue', alpha=1)
+ax.lines[0].set_color('crimson')
+ax.lines[0].set_linewidth(6)
+ax.lines[0].set_alpha(.75)
+ax.plot(linewidth=7.0)
+ax.legend(('probability density function', 'measures'), loc='upper right', shadow=True, prop={'size': 20})
+plt.xticks(range(0, 550, 100))
+plt.xticks(fontsize=0)
+plt.yticks(fontsize=18)
+plt.xlabel(None)#'British Pound [£]', fontsize=16)
+plt.ylabel("Count", fontsize=20, labelpad=10)
+plt.xlim([-50, 550])
+plt.ylim([0, 275])
+plt.title('Ticket Fare', fontsize=25, pad=20, weight='bold')
+
+plt.subplot(2, 2, 2)
+ax = sns.histplot(df['Age'], bins=40, kde=True, color='darkblue', alpha=1)
+ax.lines[0].set_color('crimson')
+ax.lines[0].set_linewidth(6)
+ax.lines[0].set_alpha(.75)
+ax.plot(linewidth=7.0)
+# ax.legend(('probability', 'data'), loc='upper right', shadow=True)
+plt.xticks(range(0, 90, 10))
+plt.xticks(fontsize=0)
+plt.yticks(fontsize=0)
+plt.xlabel(None)#'Age [yrs]', fontsize=16)
+plt.ylabel(None)#"Count", fontsize=16)
+plt.xlim([-10, 90])
+plt.ylim([0, 275])
+plt.title('Passenger Age', fontsize=25, pad=20, weight='bold')
+
+plt.subplot(2, 2, 3)
+ax = sns.violinplot(x=df.Fare, linewidth=6)
+ax.get_children()[1].set_color('white') # median
+ax.get_children()[2].set_color('black') # whisker
+ax.get_children()[3].set_color('black') # iqr
+ax.collections[0].set_facecolor(to_rgba('crimson', 0.1))
+ax.collections[0].set_edgecolor(to_rgba('crimson', .75))
+sns.stripplot(data=df, x='Fare', color='darkblue', size=5, marker="o", alpha=0.3)
+plt.xticks(range(0, 550, 100))
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
+plt.xlabel('British Pound [£]', fontsize=20, labelpad=10)
+plt.xlim([-50, 550])
+plt.ylabel('Probability', fontsize=20, labelpad=33)
 # plt.title('Ticket Fare', fontsize=25, pad=20, weight='bold')
 
-# plt.subplot(2, 2, 2)
-# ax = sns.histplot(df['Age'], bins=20, kde=True, color='darkblue', alpha=1)
-# ax.lines[0].set_color('crimson')
-# ax.lines[0].set_linewidth(3)
-# ax.lines[0].set_alpha(.75)
-# ax.plot(linewidth=7.0)
-# # ax.legend(('probability', 'data'), loc='upper right', shadow=True)
-# plt.xticks(range(0, 90, 10))
-# plt.xticks(fontsize=0)
-# plt.yticks(fontsize=0)
-# plt.xlabel(None)#'Age [yrs]', fontsize=16)
-# plt.ylabel(None)#"Count", fontsize=16)
-# plt.xlim([-10, 90])
-# plt.ylim([0, 275])
+plt.subplot(2, 2, 4)
+ax = sns.violinplot(x=df.Age, linewidth=6)
+ax.get_children()[1].set_color('white') # median
+ax.get_children()[2].set_color('black') # whisker
+ax.get_children()[3].set_color('black') # iqr
+ax.collections[0].set_facecolor(to_rgba('crimson', 0.1))
+ax.collections[0].set_edgecolor(to_rgba('crimson', .75))
+sns.stripplot(data=df, x='Age', color='darkblue', size=5, marker="o", alpha=0.3)
+plt.xticks(range(0, 90, 10))
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
+plt.xlabel('Age [yrs]', fontsize=20, labelpad=10)
+plt.xlim([-10, 90])
+# plt.ylabel('Density', fontsize=16, labelpad=15)
 # plt.title('Passenger Age', fontsize=25, pad=20, weight='bold')
 
-# plt.subplot(2, 2, 3)
-# ax = sns.violinplot(x=df.Fare, linewidth=3)
-# ax.get_children()[1].set_color('white') # median
-# ax.get_children()[2].set_color('black') # whisker
-# ax.get_children()[3].set_color('black') # iqr
-# ax.collections[0].set_facecolor(to_rgba('crimson', 0.1))
-# ax.collections[0].set_edgecolor(to_rgba('crimson', .75))
-# sns.stripplot(data=df, x='Fare', color='darkblue', size=2.5, marker="X", alpha=0.5)
-# plt.xticks(range(0, 550, 100))
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.xlabel('British Pound [£]', fontsize=16, labelpad=10)
-# plt.xlim([-50, 550])
-# plt.ylabel('Probability', fontsize=16, labelpad=33)
-# # plt.title('Ticket Fare', fontsize=25, pad=20, weight='bold')
+# space between subplots
+plt.subplots_adjust(hspace = 0.05) 
+plt.subplots_adjust(wspace=0.05)
 
-# plt.subplot(2, 2, 4)
-# ax = sns.violinplot(x=df.Age, linewidth=3)
-# ax.get_children()[1].set_color('white') # median
-# ax.get_children()[2].set_color('black') # whisker
-# ax.get_children()[3].set_color('black') # iqr
-# ax.collections[0].set_facecolor(to_rgba('crimson', 0.1))
-# ax.collections[0].set_edgecolor(to_rgba('crimson', .75))
-# sns.stripplot(data=df, x='Age', color='darkblue', size=2.5, marker="X", alpha=0.5)
-# plt.xticks(range(0, 90, 10))
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.xlabel('Age [yrs]', fontsize=16, labelpad=10)
-# plt.xlim([-10, 90])
-# # plt.ylabel('Density', fontsize=16, labelpad=15)
-# # plt.title('Passenger Age', fontsize=25, pad=20, weight='bold')
+# set the DPI to 300
+plt.figure(dpi=300)
 
-# # space between subplots
-# plt.subplots_adjust(hspace = 0.05) 
-# plt.subplots_adjust(wspace=0.05)
-
-# # set the DPI to 300
-# plt.figure(dpi=300)
-
-# plt.show()
+plt.show()
 
 
 # creating stacked histogram subplots of numerical data
-# sns.set_theme(style="whitegrid")
-# plt.figure(figsize=(16, 12))
+sns.set_theme(style="whitegrid")
+plt.figure(figsize=(16, 12))
 
-# ## Sex
-# plt.subplot(2, 3, 1)
-# ax = sns.histplot(df, x='Age', hue='Sex', bins=40, kde=True, multiple='stack', palette='bright', alpha=.9)
-# ax.lines[0].set_linewidth(6)
-# ax.lines[1].set_linewidth(6)
-# plt.xticks(range(0, 90, 10))
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.xlabel('Age [yrs]', fontsize=16)
-# plt.ylabel("Count", fontsize=16)
-# plt.xlim([-5, 85])
-# plt.ylim([0, 175])
-# plt.title('Passenger Age\nby Sex', fontsize=20, pad=20, weight='bold')
+## Sex
+plt.subplot(2, 3, 1)
+ax = sns.histplot(df, x='Age', hue='Sex', bins=40, kde=True, multiple='stack', palette='bright', alpha=.9)
+ax.lines[0].set_linewidth(6)
+ax.lines[1].set_linewidth(6)
+plt.xticks(range(0, 90, 10))
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
+plt.xlabel('Age [yrs]', fontsize=18)
+plt.ylabel("Count", fontsize=18)
+plt.xlim([-5, 85])
+plt.ylim([0, 175])
+plt.title('Passenger Age\nby Sex', fontsize=20, pad=20, weight='bold')
 
-# ## Passenger Class
-# plt.subplot(2, 3, 2)
-# ax = sns.histplot(df.sort_values(by=['Pclass']), x='Age', hue='Pclass', bins=40, multiple='stack', palette='bright', alpha=1)
-# plt.xticks(range(0, 90, 10))
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=0)
-# plt.xlabel('Age [yrs]', fontsize=16)
-# plt.ylabel(None)#"Count", fontsize=16)
-# plt.xlim([-5, 85])
-# plt.ylim([0, 175])
-# plt.title('Passenger Age\nby Class', fontsize=20, pad=20, weight='bold')
+plt.setp(ax.get_legend().get_texts(), fontsize='16')
+plt.setp(ax.get_legend().get_title(), fontsize='16')
 
-# ## Embarked
-# plt.subplot(2, 3, 3)
-# ax = sns.histplot(df, x='Age', hue='Embarked', bins=40, multiple='stack', palette='bright', alpha=1)
-# plt.xticks(range(0, 90, 10))
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=0)
-# plt.xlabel('Age [yrs]', fontsize=16)
-# plt.ylabel(None)#"Count", fontsize=16)
-# plt.xlim([-5, 85])
-# plt.ylim([0, 175])
-# plt.title('Passenger Age\nby Embarkation', fontsize=20, pad=20, weight='bold')
+## Passenger Class
+plt.subplot(2, 3, 2)
+ax = sns.histplot(df.sort_values(by=['Pclass']), x='Age', hue='Pclass', bins=40, multiple='stack', palette='bright', alpha=1)
+plt.xticks(range(0, 90, 10))
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=0)
+plt.xlabel('Age [yrs]', fontsize=18)
+plt.ylabel(None)#"Count", fontsize=16)
+plt.xlim([-5, 85])
+plt.ylim([0, 175])
+plt.title('Passenger Age\nby Class', fontsize=20, pad=20, weight='bold')
 
-# ## Title
-# plt.subplot(2, 3, 4)
-# t = ['Mr', 'Mrs', 'Master', 'Miss']
-# ax = sns.histplot(df.loc[(df['Title'].isin(t)) & (df['Age_flag'].isin(['measured','imputed']))], x='Age', hue='Title', bins=40, multiple='stack', palette='bright', alpha=1)
-# plt.xticks(range(0, 90, 10))
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.xlabel('Age [yrs]', fontsize=16)
-# plt.ylabel("Count", fontsize=16)
-# plt.xlim([-5, 85])
-# plt.ylim([0, 175])
-# plt.title('Passenger Age\nby Title', fontsize=20, pad=20, weight='bold')
+plt.setp(ax.get_legend().get_texts(), fontsize='16')
+plt.setp(ax.get_legend().get_title(), fontsize='16')
 
-# ## Imputation
-# plt.subplot(2, 3, 5)
-# t = ['Mr', 'Mrs', 'Master', 'Miss']
-# ax = sns.histplot(df.loc[(df['Title'].isin(t))], x='Age', kde=True, hue='Age_flag', bins=40, multiple='stack', palette='bright', alpha=1)
-# ax.lines[0].set_linewidth(0)
-# ax.lines[1].set_linewidth(6)
-# ax.lines[1].set_color('crimson')
-# plt.xticks(range(0, 90, 10))
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=0)
-# plt.xlabel('Age [yrs]', fontsize=16)
-# plt.ylabel(None)#"Count", fontsize=16)
-# plt.xlim([-5, 85])
-# plt.ylim([0, 175])
-# plt.title('Passenger Age\nwith Median Imputation', fontsize=20, pad=20, weight='bold')
+## Embarked
+plt.subplot(2, 3, 3)
+ax = sns.histplot(df, x='Age', hue='Embarked', bins=40, multiple='stack', palette='bright', alpha=1)
+plt.xticks(range(0, 90, 10))
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=0)
+plt.xlabel('Age [yrs]', fontsize=18)
+plt.ylabel(None)#"Count", fontsize=16)
+plt.xlim([-5, 85])
+plt.ylim([0, 175])
+plt.title('Passenger Age\nby Embarkation', fontsize=20, pad=20, weight='bold')
 
-# ## Without Imputation
-# plt.subplot(2, 3, 6)
-# # ax = sns.histplot(df.loc[(df.Age_flag == 'measured')], x='Age', hue='Sex', kde=True, bins=40, multiple='stack', palette='bright', alpha=.9)
-# ax = sns.histplot(df, x='Age_gauss', hue='Age_flag', kde=True, bins=40, multiple='stack', palette='bright', alpha=.9)
-# ax.lines[0].set_linewidth(0)
-# ax.lines[1].set_linewidth(6)
-# ax.lines[1].set_color('crimson')
-# plt.xticks(range(0, 90, 10))
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=0)
-# plt.xlabel('Age [yrs]', fontsize=16)
-# plt.ylabel(None)#"Count", fontsize=16)
-# plt.xlim([-5, 85])
-# plt.ylim([0, 175])
-# plt.title('Passenger Age\nwith Gauss Imputation', fontsize=20, pad=20, weight='bold')
+plt.setp(ax.get_legend().get_texts(), fontsize='16')
+plt.setp(ax.get_legend().get_title(), fontsize='16')
 
-# # space between subplots
-# plt.subplots_adjust(hspace = 0.5) 
-# plt.subplots_adjust(wspace=0.05)
+## Title
+plt.subplot(2, 3, 4)
+t = ['Mr', 'Mrs', 'Master', 'Miss']
+ax = sns.histplot(df.loc[(df['Title'].isin(t)) & (df['Age_flag'].isin(['measured','imputed']))], x='Age', hue='Title', bins=40, multiple='stack', palette='bright', alpha=1)
+plt.xticks(range(0, 90, 10))
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
+plt.xlabel('Age [yrs]', fontsize=18)
+plt.ylabel("Count", fontsize=18)
+plt.xlim([-5, 85])
+plt.ylim([0, 175])
+plt.title('Passenger Age\nby Title', fontsize=20, pad=20, weight='bold')
 
-# # set the DPI to 300
-# plt.figure(dpi=300)
+plt.setp(ax.get_legend().get_texts(), fontsize='16')
+plt.setp(ax.get_legend().get_title(), fontsize='16')
 
-# plt.show()
+## Imputation
+plt.subplot(2, 3, 5)
+t = ['Mr', 'Mrs', 'Master', 'Miss']
+ax = sns.histplot(df.loc[(df['Title'].isin(t))], x='Age', kde=True, hue='Age_flag', bins=40, multiple='stack', palette='bright', alpha=1)
+ax.lines[0].set_linewidth(0)
+ax.lines[1].set_linewidth(6)
+ax.lines[1].set_color('crimson')
+plt.xticks(range(0, 90, 10))
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=0)
+plt.xlabel('Age [yrs]', fontsize=18)
+plt.ylabel(None)#"Count", fontsize=16)
+plt.xlim([-5, 85])
+plt.ylim([0, 175])
+plt.title('Passenger Age\nwith Median Imputation', fontsize=20, pad=20, weight='bold')
+
+plt.setp(ax.get_legend().get_texts(), fontsize='16')
+plt.setp(ax.get_legend().get_title(), fontsize='16')
+
+## Without Imputation
+plt.subplot(2, 3, 6)
+# ax = sns.histplot(df.loc[(df.Age_flag == 'measured')], x='Age', hue='Sex', kde=True, bins=40, multiple='stack', palette='bright', alpha=.9)
+ax = sns.histplot(df, x='Age_gauss', hue='Age_flag', kde=True, bins=40, multiple='stack', palette='bright', alpha=.9)
+ax.lines[0].set_linewidth(0)
+ax.lines[1].set_linewidth(6)
+ax.lines[1].set_color('crimson')
+plt.xticks(range(0, 90, 10))
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=0)
+plt.xlabel('Age [yrs]', fontsize=18)
+plt.ylabel(None)#"Count", fontsize=16)
+plt.xlim([-5, 85])
+plt.ylim([0, 175])
+plt.title('Passenger Age\nwith Gauss Imputation', fontsize=20, pad=20, weight='bold')
+
+plt.setp(ax.get_legend().get_texts(), fontsize='16')
+plt.setp(ax.get_legend().get_title(), fontsize='16')
+
+# space between subplots
+plt.subplots_adjust(hspace = 0.5) 
+plt.subplots_adjust(wspace=0.05)
+
+# set the DPI to 300
+plt.figure(dpi=300)
+
+plt.show()
 
 
 ## find out about age gap
@@ -648,169 +666,146 @@ SE = s / math.sqrt(211)#len(df[x]))
 
 
 ## creating heatmaps
-# plt.figure(figsize=(16, 8))
+plt.figure(figsize=(16, 8))
 
-# ## Percentage Surviver: Survived vs. Sex
-# plt.subplot(2, 4, 1)
+## Percentage Surviver: Survived vs. Sex
+plt.subplot(2, 4, 1)
 
-# ax = sns.heatmap(np.array([
+ax = sns.heatmap(np.array([
     
-#     [list(df.loc[(df.Sex == 'male')].Survived.value_counts())[0]/sum(list(df.loc[(df.Sex == 'male')].Survived.value_counts())),
-#     list(df.loc[(df.Sex == 'male')].Survived.value_counts())[1]/sum(list(df.loc[(df.Sex == 'male')].Survived.value_counts()))],
+    [list(df.loc[(df.Sex == 'male')].Survived.value_counts())[0]/sum(list(df.loc[(df.Sex == 'male')].Survived.value_counts())),
+    list(df.loc[(df.Sex == 'male')].Survived.value_counts())[1]/sum(list(df.loc[(df.Sex == 'male')].Survived.value_counts()))],
     
-#     [list(df.loc[(df.Sex == 'female')].Survived.value_counts())[0]/sum(list(df.loc[(df.Sex == 'female')].Survived.value_counts())),
-#     list(df.loc[(df.Sex == 'female')].Survived.value_counts())[1]/sum(list(df.loc[(df.Sex == 'female')].Survived.value_counts()))]
+    [list(df.loc[(df.Sex == 'female')].Survived.value_counts())[0]/sum(list(df.loc[(df.Sex == 'female')].Survived.value_counts())),
+    list(df.loc[(df.Sex == 'female')].Survived.value_counts())[1]/sum(list(df.loc[(df.Sex == 'female')].Survived.value_counts()))]
     
           
-#     ]), annot=True, fmt=".0%", cmap='viridis', annot_kws={"size": 20}
+    ]), annot=True, fmt=".0%", cmap='viridis', annot_kws={"size": 20}
     
-#     )
+    )
 
-# ax.set_xticklabels(['killed', 'lived'])
-# ax.set_yticklabels(['male', 'female'])
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.title('PERCENTAGE SURVIVER\nSurvived vs. Sex', fontsize=14, pad=15, weight='bold')
+ax.set_xticklabels(['killed', 'lived'])
+ax.set_yticklabels(['male', 'female'])
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.title('PERCENTAGE SURVIVER\nSurvived vs. Sex', fontsize=14, pad=15, weight='bold')
 
-# ## Percentage Surviver: Survived vs. Class
-# plt.subplot(2, 4, 2)
+## Percentage Surviver: Survived vs. Class
+plt.subplot(2, 4, 2)
 
-# ax = sns.heatmap(np.array([
+ax = sns.heatmap(np.array([
     
-#     [i/len(df.loc[(df.Pclass == '1st')].Survived) for i in list(df.loc[(df.Pclass == '1st')].Survived.value_counts())],
-#     [i/len(df.loc[(df.Pclass == '2nd')].Survived) for i in list(df.loc[(df.Pclass == '2nd')].Survived.value_counts())],
-#     [i/len(df.loc[(df.Pclass == '3rd')].Survived) for i in list(df.loc[(df.Pclass == '3rd')].Survived.value_counts())],
+    [i/len(df.loc[(df.Pclass == '1st')].Survived) for i in list(df.loc[(df.Pclass == '1st')].Survived.value_counts())],
+    [i/len(df.loc[(df.Pclass == '2nd')].Survived) for i in list(df.loc[(df.Pclass == '2nd')].Survived.value_counts())],
+    [i/len(df.loc[(df.Pclass == '3rd')].Survived) for i in list(df.loc[(df.Pclass == '3rd')].Survived.value_counts())],
           
-#     ]), annot=True, fmt=".0%", cmap='viridis', annot_kws={"size": 20}
+    ]), annot=True, fmt=".0%", cmap='viridis', annot_kws={"size": 20}
     
-#     )
+    )
 
-# ax.set_xticklabels(['killed', 'lived'])
-# ax.set_yticklabels(['1st', '2nd', '3rd'])
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.title('PERCENTAGE SURVIVER\nSurvived vs. Class', fontsize=14, pad=15, weight='bold')
+ax.set_xticklabels(['killed', 'lived'])
+ax.set_yticklabels(['1st', '2nd', '3rd'])
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.title('PERCENTAGE SURVIVER\nSurvived vs. Class', fontsize=14, pad=15, weight='bold')
 
-# ## Percentage Passenger: Sex vs. Class
-# plt.subplot(2, 4, 3)
+## Percentage Passenger: Sex vs. Class
+plt.subplot(2, 4, 3)
 
-# ax = sns.heatmap(np.array([
+ax = sns.heatmap(np.array([
     
-#     [i/len(df.loc[(df.Pclass == '1st')].Sex) for i in list(df.loc[(df.Pclass == '1st')].Sex.value_counts())],
-#     [i/len(df.loc[(df.Pclass == '2nd')].Sex) for i in list(df.loc[(df.Pclass == '2nd')].Sex.value_counts())],
-#     [i/len(df.loc[(df.Pclass == '3rd')].Sex) for i in list(df.loc[(df.Pclass == '3rd')].Sex.value_counts())],
+    [i/len(df.loc[(df.Pclass == '1st')].Sex) for i in list(df.loc[(df.Pclass == '1st')].Sex.value_counts())],
+    [i/len(df.loc[(df.Pclass == '2nd')].Sex) for i in list(df.loc[(df.Pclass == '2nd')].Sex.value_counts())],
+    [i/len(df.loc[(df.Pclass == '3rd')].Sex) for i in list(df.loc[(df.Pclass == '3rd')].Sex.value_counts())],
           
-#     ]), annot=True, fmt=".0%", cmap='viridis', annot_kws={"size": 20}
+    ]), annot=True, fmt=".0%", cmap='viridis', annot_kws={"size": 20}
     
-#     )
+    )
 
-# ax.set_xticklabels(['male', 'female'])
-# ax.set_yticklabels(['1st', '2nd', '3rd'])
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.title('PERCENTAGE PASSENGER\nSex vs. Class', fontsize=14, pad=15, weight='bold')
+ax.set_xticklabels(['male', 'female'])
+ax.set_yticklabels(['1st', '2nd', '3rd'])
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.title('PERCENTAGE PASSENGER\nSex vs. Class', fontsize=14, pad=15, weight='bold')
 
-# ## Percentage Housed: Deck vs. Class
-# plt.subplot(2, 4, 4)
+## Percentage Housed: Deck vs. Class
+plt.subplot(2, 4, 4)
 
-# ax = sns.heatmap(np.array([
+ax = sns.heatmap(np.array([
     
-#     [len(df.loc[(df.Pclass == '1st') & (df.Deck == 'A')])/len(df.loc[(df.Pclass == '1st') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '1st') & (df.Deck == 'B')])/len(df.loc[(df.Pclass == '1st') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '1st') & (df.Deck == 'C')])/len(df.loc[(df.Pclass == '1st') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '1st') & (df.Deck == 'D')])/len(df.loc[(df.Pclass == '1st') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '1st') & (df.Deck == 'E')])/len(df.loc[(df.Pclass == '1st') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '1st') & (df.Deck == 'F')])/len(df.loc[(df.Pclass == '1st') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '1st') & (df.Deck == 'G')])/len(df.loc[(df.Pclass == '1st') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))])],
+    [len(df.loc[(df.Pclass == '1st') & (df.Deck == 'A')])/len(df.loc[(df.Pclass == '1st') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '1st') & (df.Deck == 'B')])/len(df.loc[(df.Pclass == '1st') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '1st') & (df.Deck == 'C')])/len(df.loc[(df.Pclass == '1st') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '1st') & (df.Deck == 'D')])/len(df.loc[(df.Pclass == '1st') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '1st') & (df.Deck == 'E')])/len(df.loc[(df.Pclass == '1st') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '1st') & (df.Deck == 'F')])/len(df.loc[(df.Pclass == '1st') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '1st') & (df.Deck == 'G')])/len(df.loc[(df.Pclass == '1st') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))])],
     
-#     [len(df.loc[(df.Pclass == '2nd') & (df.Deck == 'A')])/len(df.loc[(df.Pclass == '2nd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '2nd') & (df.Deck == 'B')])/len(df.loc[(df.Pclass == '2nd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '2nd') & (df.Deck == 'C')])/len(df.loc[(df.Pclass == '2nd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '2nd') & (df.Deck == 'D')])/len(df.loc[(df.Pclass == '2nd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '2nd') & (df.Deck == 'E')])/len(df.loc[(df.Pclass == '2nd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '2nd') & (df.Deck == 'F')])/len(df.loc[(df.Pclass == '2nd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '2nd') & (df.Deck == 'G')])/len(df.loc[(df.Pclass == '2nd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))])],
+    [len(df.loc[(df.Pclass == '2nd') & (df.Deck == 'A')])/len(df.loc[(df.Pclass == '2nd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '2nd') & (df.Deck == 'B')])/len(df.loc[(df.Pclass == '2nd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '2nd') & (df.Deck == 'C')])/len(df.loc[(df.Pclass == '2nd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '2nd') & (df.Deck == 'D')])/len(df.loc[(df.Pclass == '2nd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '2nd') & (df.Deck == 'E')])/len(df.loc[(df.Pclass == '2nd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '2nd') & (df.Deck == 'F')])/len(df.loc[(df.Pclass == '2nd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '2nd') & (df.Deck == 'G')])/len(df.loc[(df.Pclass == '2nd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))])],
     
-#     [len(df.loc[(df.Pclass == '3rd') & (df.Deck == 'A')])/len(df.loc[(df.Pclass == '3rd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '3rd') & (df.Deck == 'B')])/len(df.loc[(df.Pclass == '3rd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '3rd') & (df.Deck == 'C')])/len(df.loc[(df.Pclass == '3rd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '3rd') & (df.Deck == 'D')])/len(df.loc[(df.Pclass == '3rd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '3rd') & (df.Deck == 'E')])/len(df.loc[(df.Pclass == '3rd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '3rd') & (df.Deck == 'F')])/len(df.loc[(df.Pclass == '3rd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
-#       len(df.loc[(df.Pclass == '3rd') & (df.Deck == 'G')])/len(df.loc[(df.Pclass == '3rd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))])],
+    [len(df.loc[(df.Pclass == '3rd') & (df.Deck == 'A')])/len(df.loc[(df.Pclass == '3rd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '3rd') & (df.Deck == 'B')])/len(df.loc[(df.Pclass == '3rd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '3rd') & (df.Deck == 'C')])/len(df.loc[(df.Pclass == '3rd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '3rd') & (df.Deck == 'D')])/len(df.loc[(df.Pclass == '3rd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '3rd') & (df.Deck == 'E')])/len(df.loc[(df.Pclass == '3rd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '3rd') & (df.Deck == 'F')])/len(df.loc[(df.Pclass == '3rd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))]),
+      len(df.loc[(df.Pclass == '3rd') & (df.Deck == 'G')])/len(df.loc[(df.Pclass == '3rd') & (df.Deck.isin(['A', 'B', 'C', 'D', 'E', 'F', 'G']))])],
      
           
-#     ]), annot=True, fmt=".0%", cmap='viridis', annot_kws={"size": 8}
+    ]), annot=False, fmt=".0%", cmap='viridis', annot_kws={"size": 8}
     
-#     )
+    )
 
-# ax.set_xticklabels(['A', 'B', 'C', 'D', 'E', 'F', 'G'])
-# ax.set_yticklabels(['1st', '2nd', '3rd'])
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.title('PRECENTAGE HOUSED\nDeck vs. Class', fontsize=14, pad=15, weight='bold')
+ax.set_xticklabels(['A', 'B', 'C', 'D', 'E', 'F', 'G'])
+ax.set_yticklabels(['1st', '2nd', '3rd'])
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.title('PRECENTAGE HOUSED\nDeck vs. Class', fontsize=14, pad=15, weight='bold')
 
-# ## Median Age: Sex vs. Class
-# plt.subplot(2, 4, 5)
 
-# ax = sns.heatmap(np.array([
+## Median Age: Sex vs. Class
+plt.subplot(2, 4, 5)
+
+ax = sns.heatmap(np.array([
     
-#     [statistics.median(df.loc[(df.Pclass == '1st') & (df.Sex == 'male')].Age),
-#       statistics.median(df.loc[(df.Pclass == '1st') & (df.Sex == 'female')].Age)],
+    [statistics.median(df.loc[(df.Pclass == '1st') & (df.Sex == 'male')].Age),
+      statistics.median(df.loc[(df.Pclass == '1st') & (df.Sex == 'female')].Age)],
     
-#     [statistics.median(df.loc[(df.Pclass == '2nd') & (df.Sex == 'male')].Age),
-#       statistics.median(df.loc[(df.Pclass == '2nd') & (df.Sex == 'female')].Age)],
+    [statistics.median(df.loc[(df.Pclass == '2nd') & (df.Sex == 'male')].Age),
+      statistics.median(df.loc[(df.Pclass == '2nd') & (df.Sex == 'female')].Age)],
     
-#     [statistics.median(df.loc[(df.Pclass == '3rd') & (df.Sex == 'male')].Age),
-#       statistics.median(df.loc[(df.Pclass == '3rd') & (df.Sex == 'female')].Age)],
+    [statistics.median(df.loc[(df.Pclass == '3rd') & (df.Sex == 'male')].Age),
+      statistics.median(df.loc[(df.Pclass == '3rd') & (df.Sex == 'female')].Age)],
           
-#     ]), annot=True, fmt=".0f", cmap='viridis', annot_kws={"size": 20}
+    ]), annot=True, fmt=".0f", cmap='viridis', annot_kws={"size": 20}
     
-#     )
+    )
 
-# ax.set_xticklabels(['male', 'female'])
-# ax.set_yticklabels(['1st', '2nd', '3rd'])
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.title('MEDIAN AGE\nSex vs. Class', fontsize=14, pad=15, weight='bold')
+ax.set_xticklabels(['male', 'female'])
+ax.set_yticklabels(['1st', '2nd', '3rd'])
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.title('MEDIAN AGE\nSex vs. Class', fontsize=14, pad=15, weight='bold')
 
-# ## Mean Relatives: Sex vs. Class
-# # plt.subplot(2, 4, 6)
-
-# # ax = sns.heatmap(np.array([
-    
-# #     [statistics.mean(df.loc[(df.Pclass == '1st') & (df.Sex == 'male')].Relatives),
-# #       statistics.mean(df.loc[(df.Pclass == '1st') & (df.Sex == 'female')].Relatives)],
-    
-# #     [statistics.mean(df.loc[(df.Pclass == '2nd') & (df.Sex == 'male')].Relatives),
-# #       statistics.mean(df.loc[(df.Pclass == '2nd') & (df.Sex == 'female')].Relatives)],
-    
-# #     [statistics.mean(df.loc[(df.Pclass == '3rd') & (df.Sex == 'male')].Relatives),
-# #       statistics.mean(df.loc[(df.Pclass == '3rd') & (df.Sex == 'female')].Relatives)],
-          
-# #     ]), annot=True, fmt=".2f", cmap='viridis', annot_kws={"size": 20}
-    
-# #     )
-
-# # ax.set_xticklabels(['male', 'female'])
-# # ax.set_yticklabels(['1st', '2nd', '3rd'])
-# # plt.xticks(fontsize=14)
-# # plt.yticks(fontsize=14)
-# # plt.title('MEAN RELATIVES\nSex vs. Class', fontsize=14, pad=15, weight='bold')
-
-# ## Mean Siblings/Spouses: Sex vs. Class
+## Mean Relatives: Sex vs. Class
 # plt.subplot(2, 4, 6)
 
 # ax = sns.heatmap(np.array([
     
-#     [statistics.mean(df.loc[(df.Pclass == '1st') & (df.Sex == 'male')].SibSp),
-#       statistics.mean(df.loc[(df.Pclass == '1st') & (df.Sex == 'female')].SibSp)],
+#     [statistics.mean(df.loc[(df.Pclass == '1st') & (df.Sex == 'male')].Relatives),
+#       statistics.mean(df.loc[(df.Pclass == '1st') & (df.Sex == 'female')].Relatives)],
     
-#     [statistics.mean(df.loc[(df.Pclass == '2nd') & (df.Sex == 'male')].SibSp),
-#       statistics.mean(df.loc[(df.Pclass == '2nd') & (df.Sex == 'female')].SibSp)],
+#     [statistics.mean(df.loc[(df.Pclass == '2nd') & (df.Sex == 'male')].Relatives),
+#       statistics.mean(df.loc[(df.Pclass == '2nd') & (df.Sex == 'female')].Relatives)],
     
-#     [statistics.mean(df.loc[(df.Pclass == '3rd') & (df.Sex == 'male')].SibSp),
-#       statistics.mean(df.loc[(df.Pclass == '3rd') & (df.Sex == 'female')].SibSp)],
+#     [statistics.mean(df.loc[(df.Pclass == '3rd') & (df.Sex == 'male')].Relatives),
+#       statistics.mean(df.loc[(df.Pclass == '3rd') & (df.Sex == 'female')].Relatives)],
           
 #     ]), annot=True, fmt=".2f", cmap='viridis', annot_kws={"size": 20}
     
@@ -820,178 +815,228 @@ SE = s / math.sqrt(211)#len(df[x]))
 # ax.set_yticklabels(['1st', '2nd', '3rd'])
 # plt.xticks(fontsize=14)
 # plt.yticks(fontsize=14)
-# plt.title('MEAN SIBLINGS/SPOUSES\nSex vs. Class', fontsize=14, pad=15, weight='bold')
+# plt.title('MEAN RELATIVES\nSex vs. Class', fontsize=14, pad=15, weight='bold')
 
-# ## Mean Parents/Children: Sex vs. Class
+## Mean Siblings/Spouses: Sex vs. Class
+plt.subplot(2, 4, 6)
 
-# print(len(df.loc[(df.Pclass == '1st') & (df.Parch == 0) & (df.Age_gauss < 21) & (df.Survived == 1)])/
-#       len(df.loc[(df.Pclass == '1st') & (df.Parch == 0) & (df.Age_gauss < 21)]),
+ax = sns.heatmap(np.array([
+    
+    [statistics.mean(df.loc[(df.Pclass == '1st') & (df.Sex == 'male')].SibSp),
+      statistics.mean(df.loc[(df.Pclass == '1st') & (df.Sex == 'female')].SibSp)],
+    
+    [statistics.mean(df.loc[(df.Pclass == '2nd') & (df.Sex == 'male')].SibSp),
+      statistics.mean(df.loc[(df.Pclass == '2nd') & (df.Sex == 'female')].SibSp)],
+    
+    [statistics.mean(df.loc[(df.Pclass == '3rd') & (df.Sex == 'male')].SibSp),
+      statistics.mean(df.loc[(df.Pclass == '3rd') & (df.Sex == 'female')].SibSp)],
+          
+    ]), annot=True, fmt=".2f", cmap='viridis', annot_kws={"size": 20}
+    
+    )
+
+ax.set_xticklabels(['male', 'female'])
+ax.set_yticklabels(['1st', '2nd', '3rd'])
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.title('MEAN SIBLINGS/SPOUSES\nSex vs. Class', fontsize=14, pad=15, weight='bold')
+
+## Mean Parents/Children: Sex vs. Class
+
+print(len(df.loc[(df.Pclass == '1st') & (df.Parch == 0) & (df.Age_gauss < 21) & (df.Survived == 1)])/
+      len(df.loc[(df.Pclass == '1st') & (df.Parch == 0) & (df.Age_gauss < 21)]),
       
-#       len(df.loc[(df.Pclass == '1st') & (df.Parch > 0) & (df.Age_gauss < 21) & (df.Survived == 1)])/
-#       len(df.loc[(df.Pclass == '1st') & (df.Parch > 0) & (df.Age_gauss < 21)])
+      len(df.loc[(df.Pclass == '1st') & (df.Parch > 0) & (df.Age_gauss < 21) & (df.Survived == 1)])/
+      len(df.loc[(df.Pclass == '1st') & (df.Parch > 0) & (df.Age_gauss < 21)])
       
-#       )
+      )
 
-# ## Mean Parents/Children: Sex vs. Class
-# plt.subplot(2, 4, 7)
+## Mean Parents/Children: Sex vs. Class
+plt.subplot(2, 4, 7)
 
-# ax = sns.heatmap(np.array([
+ax = sns.heatmap(np.array([
     
-#     [statistics.mean(df.loc[(df.Pclass == '1st') & (df.Sex == 'male')].Parch),
-#       statistics.mean(df.loc[(df.Pclass == '1st') & (df.Sex == 'female')].Parch)],
+    [statistics.mean(df.loc[(df.Pclass == '1st') & (df.Sex == 'male')].Parch),
+      statistics.mean(df.loc[(df.Pclass == '1st') & (df.Sex == 'female')].Parch)],
     
-#     [statistics.mean(df.loc[(df.Pclass == '2nd') & (df.Sex == 'male')].Parch),
-#       statistics.mean(df.loc[(df.Pclass == '2nd') & (df.Sex == 'female')].Parch)],
+    [statistics.mean(df.loc[(df.Pclass == '2nd') & (df.Sex == 'male')].Parch),
+      statistics.mean(df.loc[(df.Pclass == '2nd') & (df.Sex == 'female')].Parch)],
     
-#     [statistics.mean(df.loc[(df.Pclass == '3rd') & (df.Sex == 'male')].Parch),
-#       statistics.mean(df.loc[(df.Pclass == '3rd') & (df.Sex == 'female')].Parch)],
+    [statistics.mean(df.loc[(df.Pclass == '3rd') & (df.Sex == 'male')].Parch),
+      statistics.mean(df.loc[(df.Pclass == '3rd') & (df.Sex == 'female')].Parch)],
           
-#     ]), annot=True, fmt=".2f", cmap='viridis', annot_kws={"size": 20}
+    ]), annot=True, fmt=".2f", cmap='viridis', annot_kws={"size": 20}
     
-#     )
+    )
 
-# ax.set_xticklabels(['male', 'female'])
-# ax.set_yticklabels(['1st', '2nd', '3rd'])
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.title('MEAN PARENTS/CHILDREN\nSex vs. Class', fontsize=14, pad=15, weight='bold')
+ax.set_xticklabels(['male', 'female'])
+ax.set_yticklabels(['1st', '2nd', '3rd'])
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.title('MEAN PARENTS/CHILDREN\nSex vs. Class', fontsize=14, pad=15, weight='bold')
 
-# ## Percentage <21 Surviver: Class vs. Guardian
-# plt.subplot(2, 4, 8)
+## Percentage <21 Surviver: Class vs. Guardian
+plt.subplot(2, 4, 8)
 
-# ax = sns.heatmap(np.array([
+ax = sns.heatmap(np.array([
     
-#     [len(df.loc[(df.Pclass == '1st') & (df.Parch == 0) & (df.Age_gauss < 21) & (df.Survived == 1)])/
-#      len(df.loc[(df.Pclass == '1st') & (df.Parch == 0) & (df.Age_gauss < 21)]),
+    [len(df.loc[(df.Pclass == '1st') & (df.Parch == 0) & (df.Age_gauss < 21) & (df.Survived == 1)])/
+      len(df.loc[(df.Pclass == '1st') & (df.Parch == 0) & (df.Age_gauss < 21)]),
           
-#      len(df.loc[(df.Pclass == '1st') & (df.Parch > 0) & (df.Age_gauss < 21) & (df.Survived == 1)])/
-#      len(df.loc[(df.Pclass == '1st') & (df.Parch > 0) & (df.Age_gauss < 21)])],
+      len(df.loc[(df.Pclass == '1st') & (df.Parch > 0) & (df.Age_gauss < 21) & (df.Survived == 1)])/
+      len(df.loc[(df.Pclass == '1st') & (df.Parch > 0) & (df.Age_gauss < 21)])],
     
-#     [len(df.loc[(df.Pclass == '2nd') & (df.Parch == 0) & (df.Age_gauss < 21) & (df.Survived == 1)])/
-#      len(df.loc[(df.Pclass == '2nd') & (df.Parch == 0) & (df.Age_gauss < 21)]),
+    [len(df.loc[(df.Pclass == '2nd') & (df.Parch == 0) & (df.Age_gauss < 21) & (df.Survived == 1)])/
+      len(df.loc[(df.Pclass == '2nd') & (df.Parch == 0) & (df.Age_gauss < 21)]),
           
-#      len(df.loc[(df.Pclass == '2nd') & (df.Parch > 0) & (df.Age_gauss < 21) & (df.Survived == 1)])/
-#      len(df.loc[(df.Pclass == '2nd') & (df.Parch > 0) & (df.Age_gauss < 21)])],
+      len(df.loc[(df.Pclass == '2nd') & (df.Parch > 0) & (df.Age_gauss < 21) & (df.Survived == 1)])/
+      len(df.loc[(df.Pclass == '2nd') & (df.Parch > 0) & (df.Age_gauss < 21)])],
     
-#     [len(df.loc[(df.Pclass == '3rd') & (df.Parch == 0) & (df.Age_gauss < 21) & (df.Survived == 1)])/
-#      len(df.loc[(df.Pclass == '3rd') & (df.Parch == 0) & (df.Age_gauss < 21)]),
+    [len(df.loc[(df.Pclass == '3rd') & (df.Parch == 0) & (df.Age_gauss < 21) & (df.Survived == 1)])/
+      len(df.loc[(df.Pclass == '3rd') & (df.Parch == 0) & (df.Age_gauss < 21)]),
           
-#      len(df.loc[(df.Pclass == '3rd') & (df.Parch > 0) & (df.Age_gauss < 21) & (df.Survived == 1)])/
-#      len(df.loc[(df.Pclass == '3rd') & (df.Parch > 0) & (df.Age_gauss < 21)])],
+      len(df.loc[(df.Pclass == '3rd') & (df.Parch > 0) & (df.Age_gauss < 21) & (df.Survived == 1)])/
+      len(df.loc[(df.Pclass == '3rd') & (df.Parch > 0) & (df.Age_gauss < 21)])],
     
           
-#     ]), annot=True, fmt=".0%", cmap='viridis', annot_kws={"size": 20}
+    ]), annot=True, fmt=".0%", cmap='viridis', annot_kws={"size": 20}
     
-#     )
+    )
 
-# ax.set_xticklabels(['alone', 'guardian'])
-# ax.set_yticklabels(['1st', '2nd', '3rd'])
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.title('PERCENTAGE <21 SURVIVER\nClass vs. Guardian', fontsize=14, pad=15, weight='bold')
+ax.set_xticklabels(['alone', 'guardian'])
+ax.set_yticklabels(['1st', '2nd', '3rd'])
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.title('PERCENTAGE <21 SURVIVER\nClass vs. Guardian', fontsize=14, pad=15, weight='bold')
 
-# # space between subplots
-# plt.subplots_adjust(hspace = 0.5) 
-# plt.subplots_adjust(wspace=0.25)
+# space between subplots
+plt.subplots_adjust(hspace = 0.5) 
+plt.subplots_adjust(wspace=0.25)
 
-# # set the DPI to 300
-# plt.figure(dpi=300)
+# set the DPI to 300
+plt.figure(dpi=300)
 
-# plt.show()
+plt.show()
 
 
-# tbl = pd.get_dummies(
+tbl = pd.get_dummies(
     
-#     df, 
-#     columns=[
+    df, 
+    columns=[
         
-#         'Pclass',
-#         'Sex',
-#         'Title',
-#         'Embarked',
-#         'Deck',
+        'Pclass',
+        'Sex',
+        'Title',
+        'Embarked',
+        'Deck',
 
-#         ]
+        ]
     
-#     )
+    )
 
-# # ## creating correlation heatmaps (pearson, spearman)
-# plt.figure(figsize=(16, 6))
+# ## creating correlation heatmaps (pearson, spearman)
+plt.figure(figsize=(14, 6))
 
-# ## Numerical values only --> Pearson
-# plt.subplot(1, 2, 1)
+## Numerical values only --> Pearson
+plt.subplot(1, 2, 1)
 
-# att = {
+att = {
        
-#        'Fare' : 'Ticket Fare', 
-#        'FarePerson' : 'Passenger Fare', 
-#        'Age_gauss' : 'Passenger Age', 
-#        'Relatives' : '#Relatives', 
-#        'SibSp' : '#Siblings/Spouses', 
-#        'Parch' : '#Parents/Children',
+        'Fare' : 'Ticket Fare', 
+        'FarePerson' : 'Passenger Fare', 
+        'Age_gauss' : 'Passenger Age', 
+        'Relatives' : '#Relatives', 
+        'SibSp' : '#Siblings/Spouses', 
+        'Parch' : '#Parents/Children',
        
-#        }
+        }
 
-# p = tbl[att.keys()]
+p = tbl[att.keys()]
 
-# # Normalize the data
-# scaler = StandardScaler()
-# X_normalized = scaler.fit_transform(p)
+# Normalize the data
+scaler = StandardScaler()
+X_normalized = scaler.fit_transform(p)
 
-# # Compute the Pearson correlation matrix
-# ax = sns.heatmap(
+# Compute the Pearson correlation matrix
+ax = sns.heatmap(
     
-#     pd.DataFrame(X_normalized).corr(method='pearson'),
-#     annot=True,
-#     fmt=".1f",
-#     annot_kws={"size":12},
-#     cmap='viridis',
+    pd.DataFrame(X_normalized).corr(method='pearson'),
+    annot=True,
+    fmt=".1f",
+    annot_kws={"size":20},
+    cmap='viridis',
+    cbar=False,
     
-#     )
+    )
 
-# ax.set_xticklabels(att.values(), rotation=90)
-# ax.set_yticklabels(att.values(), rotation=0)
-# plt.xticks(fontsize=None)
-# plt.yticks(fontsize=None)
-# plt.title('PEARSON CORRELATION\nnumerical features', fontsize=14, pad=15, weight='bold')
+ax.set_xticklabels(att.values(), rotation=90)
+ax.set_yticklabels(att.values(), rotation=0)
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
+plt.title('PEARSON CORRELATION\nnumerical features', fontsize=20, pad=15, weight='bold')
 
-# ## Survivier Features
-# plt.subplot(1, 2, 2)
+## highlighting
+ax.add_patch(Rectangle((0.054, 3.04), 1.9, 2.89, fill=False, edgecolor='lightblue', lw=5, linestyle='-'))
+ax.add_patch(Rectangle((3.04, 0.04), 2.9, 1.9, fill=False, edgecolor='lightblue', lw=5, linestyle='-'))
+ax.add_patch(Rectangle((2.04, 3.03), 0.9, 2.9, fill=False, edgecolor='magenta', lw=5))
+ax.add_patch(Rectangle((3.04, 2.04), 2.9, 0.9, fill=False, edgecolor='magenta', lw=5))
+ax.add_patch(Rectangle((0.054, 0.04), 1.9, 1.9, fill=False, edgecolor='darkgreen', lw=5, linestyle='dotted'))
+ax.add_patch(Rectangle((3.048, 3.03), 2.9, 2.9, fill=False, edgecolor='darkgreen', lw=5, linestyle='--'))
 
-# att = {
+
+
+## Survivier Features
+plt.subplot(1, 2, 2)
+
+att = {
        
-#        'Survived' : 'Survived', 
-#        'Sex_female' : 'Female', 
-#        'Title_Mrs' : 'Mrs', 
-#        'Pclass_1st' : '1st Class',
-#        'Fare' : 'Ticket Fare',
-#        'Embarked_Cherbourg' : 'Cherbourg',
-#        # 'Parch' : '#Parents/Children',
+        'Survived' : 'Survived', 
+        'Sex_female' : 'Female', 
+        'Title_Mrs' : 'Mrs', 
+        'Pclass_1st' : '1st Class',
+        'Fare' : 'Ticket Fare',
+        'Embarked_Cherbourg' : 'Cherbourg',
+        # 'Parch' : '#Parents/Children',
        
-#        }
+        }
 
-# p = tbl[att.keys()]
+p = tbl[att.keys()]
 
-# # Normalize the data
-# scaler = StandardScaler()
-# X_normalized = scaler.fit_transform(p)
+# Normalize the data
+scaler = StandardScaler()
+X_normalized = scaler.fit_transform(p)
 
-# # Compute the Pearson correlation matrix
-# ax = sns.heatmap(
+# Compute the Pearson correlation matrix
+ax = sns.heatmap(
     
-#     pd.DataFrame(X_normalized).corr(method='spearman'),
-#     annot=True,
-#     fmt=".1f",
-#     annot_kws={"size":12},
-#     cmap='viridis',
+    pd.DataFrame(X_normalized).corr(method='spearman'),
+    annot=True,
+    fmt=".1f",
+    annot_kws={"size":20},
+    cmap='viridis',
+    cbar=False,
     
-#     )
+    )
 
-# ax.set_xticklabels(att.values(), rotation=90)
-# ax.set_yticklabels(att.values(), rotation=0)
-# plt.xticks(fontsize=None)
-# plt.yticks(fontsize=None)
-# plt.title('SPEARMAN CORRELATION\nsurviver features', fontsize=14, pad=15, weight='bold')
+ax.set_xticklabels(att.values(), rotation=90)
+ax.set_yticklabels(att.values(), rotation=0)
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
+plt.title('SPEARMAN CORRELATION\nsurviver features', fontsize=20, pad=15, weight='bold')
+
+## highlighting
+ax.add_patch(Rectangle((4.054, 1.04), 0.9, 0.89, fill=False, edgecolor='lightblue', lw=5, linestyle='-'))
+ax.add_patch(Rectangle((1.04, 4.054), 0.89, 0.9, fill=False, edgecolor='lightblue', lw=5, linestyle='-'))
+
+
+# space between subplots
+plt.subplots_adjust(hspace = 0.5) 
+plt.subplots_adjust(wspace=0.4)
+
+# set the DPI to 300
+plt.figure(dpi=300)
+
+plt.show()
 
 
 ## Covariance Computation of numerical values
@@ -1048,189 +1093,193 @@ SE = s / math.sqrt(211)#len(df[x]))
 
 
 ## Interesting aspects
-# data = []
+data = []
 
-# for q in ['1st', '2nd', '3rd']:
+for q in ['1st', '2nd', '3rd']:
     
-#     test = df.loc[(df.Age_gauss < 21) & (df.Pclass == q)].values.tolist()
+    test = df.loc[(df.Age_gauss < 21) & (df.Pclass == q)].values.tolist()
     
-#     guard1, guard2 = [], []
+    guard1, guard2 = [], []
     
-#     for i in test:
+    for i in test:
         
-#         tmp = {}
-#         tmp2 = {}
+        tmp = {}
+        tmp2 = {}
         
-#         for j in df[['Ticket', 'Age_gauss', 'Sex', 'Survived']].values.tolist():
+        for j in df[['Ticket', 'Age_gauss', 'Sex', 'Survived', 'SibSp']].values.tolist():
                        
-#             if i[6] == j[0] and i[5] > 0 and j[1] > i[15]:
+            if i[6] == j[0] and i[5] > 0 and j[1] > i[15]:
                 
-#                 i.append(j[1])
-#                 tmp[j[1]] = j[2]
-#                 tmp2[j[1]] = j[3]
+                i.append(j[1])
+                tmp[j[1]] = j[2]
+                tmp2[j[1]] = j[3]
         
-        
-#         if len(i) > 17 and i[5] == 1:
+        if len(i) > 17 and i[5] == 1:
             
-#             l = max(i[17:])
+            l = max(i[17:])
             
-#             guard1.append([i[1], l, tmp[l], i[15], i[0], tmp2[l]])
+            guard1.append([i[1], l, tmp[l], i[15], i[0], tmp2[l], i[4]])
+        
+        elif len(i) > 17 and i[5] > 1:
             
-        
-#         elif len(i) > 17 and i[5] > 1:
+            l = max(i[17:])
+            # i.remove(l)
+            # s = max(i[17:])
             
-#             l = max(i[17:])
-#             # i.remove(l)
-#             # s = max(i[17:])
-            
-#             guard2.append([i[1], l, tmp[l], i[15], i[0], tmp2[l]])
+            guard2.append([i[1], l, tmp[l], i[15], i[0], tmp2[l], i[4]])
     
     
-#     data.append([
+    data.append([
         
-#         len(guard1)/(len(guard1)+len(guard2)), 
-#         np.median([i[3] for i in guard1]), 
-#         np.median([i[1] for i in guard1]), 
-#         [i[2] for i in guard1].count('female')/len(guard1),
-#         sum([i[4] for i in guard1])/len(guard1),
-#         # sum([i[4] for i in guard2])/len(guard2),
-#         sum([i[5] for i in guard1])/len(guard1),
-#         # sum([i[5] for i in guard2])/len(guard2),
+        len(guard1)/(len(guard1)+len(guard2)), 
+        np.median([i[3] for i in guard1]), 
+        np.median([i[1] for i in guard1]), 
+        [i[2] for i in guard1].count('female')/len(guard1),
+        np.average([i[6] for i in guard1]), ## number of siblings
+        sum([i[4] for i in guard1])/len(guard1),
+        # sum([i[4] for i in guard2])/len(guard2),
+        sum([i[5] for i in guard1])/len(guard1),
+        # sum([i[5] for i in guard2])/len(guard2),
         
-#         ])
+        ])
 
 
-# # Create a uniform color colormap with a single color
-# color1 = 'whitesmoke'
-# color2 = 'whitesmoke'
-# cmap = plt.matplotlib.colors.LinearSegmentedColormap.from_list("", [color1, color2])
+# Create a uniform color colormap with a single color
+color1 = 'whitesmoke'
+color2 = 'whitesmoke'
+cmap = plt.matplotlib.colors.LinearSegmentedColormap.from_list("", [color1, color2])
 
 
-# ## creating heatmaps
-# plt.figure(figsize=(14, 8))
-
-# ## Percentage Surviver: Survived vs. Sex
-# plt.subplot(1, 2, 1)
-
-# ax = sns.heatmap(np.array(   
-    
-#     list(zip(*data))
-    
-#     ), annot=True, fmt=".1f", annot_kws={"size": 20}, cmap=cmap, cbar=False, linecolor='black', linewidths=3
-    
-#     )
-
-# ax.set_yticklabels([
-    
-#     'one guardian\nonly ratio', 
-#     'median\nchild age', 
-#     'median\nguardian age', 
-#     'guardian\nfemale ratio',
-#     'child\nsurviver ratio',
-#     # 'multiple guardian\nsurviver ratio',
-#     'guardian\nsurviver ratio',
-#     # 'multiple guardian\nsurviver ratio',
-    
-    
-#     ], rotation=0,)# ha='left')
-
-# # find the maximum width of the label on the major ticks
-# # yax = ax.get_yaxis()
-# # pad = max(T.label.get_window_extent().width for T in yax.majorTicks)*1.5
-# # yax.set_tick_params(pad=pad)
-
-# ax.set_xticklabels(['1st', '2nd', '3rd'])
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.title('UNDERAGED CHILDREN (<21yrs)\nguarded by one parent only', fontsize=14, pad=15, weight='bold')
-
-# ax.add_patch(Rectangle((0.05, 0.075), 0.90, 0.85, fill=True, facecolor='yellow'))#, edgecolor='black', lw=1))
-# ax.add_patch(Rectangle((0.05, 1.075), 0.90, 0.85, fill=True, facecolor='yellow'))#, edgecolor='black', lw=1))
-# ax.add_patch(Rectangle((0.05, 2.075), 0.90, 0.85, fill=True, facecolor='yellow'))#, edgecolor='black', lw=1))
-# ax.add_patch(Rectangle((0.05, 4.075), 0.90, 0.85, fill=True, facecolor='lime'))#, edgecolor='black', lw=1))
-# ax.add_patch(Rectangle((1.05, 4.075), 0.90, 0.85, fill=True, facecolor='lime'))#, edgecolor='black', lw=1))
-# ax.add_patch(Rectangle((2.05, 4.075), 0.90, 0.85, fill=True, facecolor='red'))#, edgecolor='black', lw=1))
-# ax.add_patch(Rectangle((0.05, 5.075), 0.90, 0.85, fill=True, facecolor='lime'))#, edgecolor='black', lw=1))
-# ax.add_patch(Rectangle((1.05, 5.075), 0.90, 0.85, fill=True, facecolor='lime'))#, edgecolor='black', lw=1))
-# ax.add_patch(Rectangle((2.05, 5.075), 0.90, 0.85, fill=True, facecolor='red'))#, edgecolor='black', lw=1))
-
-
-# ## spearman correlation of 3rd class passenger
-# plt.subplot(1, 2, 2)
-
-# data = []
-
-# test = df.loc[(df.Age_gauss < 21) & (df.Pclass == '3rd')].values.tolist()
-
-# guard3 = []
-
-# for i in test:
-    
-#     tmp = {}
-#     tmp2 = {}
-    
-#     for j in df[['Ticket', 'Age_gauss', 'Sex', 'Survived']].values.tolist():
-                   
-#         if i[6] == j[0] and i[5] > 0 and j[1] > i[15]:
-            
-#             i.append(j[1])
-#             tmp[j[1]] = j[2]
-#             tmp2[j[1]] = j[3]
-    
-    
-#     if len(i) > 17 and i[5] == 1:
-        
-#         l = max(i[17:])
-        
-#         guard3.append([i[0], tmp2[l]])
-    
-#     elif len(i) > 17 and i[5] == 2:
-        
-#         l = max(i[17:])
-#         i.remove(l)
-        
-#         ## fix incomplete dataset
-#         if len(i) > 17:
-            
-#             s = max(i[17:])
-        
-#         else:
-            
-#             s = l
-
-#         guard3.append([i[0], max([tmp2[l], tmp2[s]])])
-
-
-# ax = sns.heatmap(
-    
-#     pd.DataFrame(guard3).corr(method='spearman'),
-#     annot=True,
-#     fmt=".1f",
-#     annot_kws={"size":22},
-#     cmap='viridis',
-    
-#     )
-
-# ax.set_xticklabels(['child survived', 'guardian survived'], rotation=0)
-# ax.set_yticklabels(['child survived', 'guardian survived'], rotation=90)
-# plt.xticks(fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.title('SPEARMAN CORRELATION\n3rd class surviver', fontsize=14, pad=15, weight='bold')
-
-
-# # space between subplots
-# # plt.subplots_adjust(hspace = 0.5) 
-# # plt.subplots_adjust(wspace=0.25)
-
-# # set the DPI to 300
-# plt.figure(dpi=300)
-
-# plt.show()
-
-
-## 3rd class female correlation with relatives
 ## creating heatmaps
-plt.figure(figsize=(16, 4))
+plt.figure(figsize=(14, 8))
+
+## Percentage Surviver: Survived vs. Sex
+plt.subplot(1, 2, 1)
+
+ax = sns.heatmap(np.array(   
+    
+    list(zip(*data))
+    
+    ), annot=True, fmt=".1f", annot_kws={"size": 30}, cmap=cmap, cbar=False, linecolor='black', linewidths=3
+    
+    )
+
+ax.set_yticklabels([
+    
+    'one guardian\nonly ratio', 
+    'median\nward age', 
+    'median\nguardian age', 
+    'guardian\nfemale ratio',
+    'average\n #siblings',
+    'ward\nsurviver ratio',
+    # 'multiple guardian\nsurviver ratio',
+    'guardian\nsurviver ratio',
+    # 'multiple guardian\nsurviver ratio',
+    
+    
+    ], rotation=0,)# ha='left')
+
+# find the maximum width of the label on the major ticks
+# yax = ax.get_yaxis()
+# pad = max(T.label.get_window_extent().width for T in yax.majorTicks)*1.5
+# yax.set_tick_params(pad=pad)
+
+ax.set_xticklabels(['1st', '2nd', '3rd'])
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
+plt.title('UNDERAGED CHILDREN (<21yrs)\nguarded by one parent only', fontsize=20, pad=15, weight='bold')
+
+ax.add_patch(Rectangle((0.05, 0.075), 0.90, 0.85, fill=True, facecolor='yellow'))#, edgecolor='black', lw=1))
+ax.add_patch(Rectangle((0.05, 1.075), 0.90, 0.85, fill=True, facecolor='yellow'))#, edgecolor='black', lw=1))
+ax.add_patch(Rectangle((0.05, 2.075), 0.90, 0.85, fill=True, facecolor='yellow'))#, edgecolor='black', lw=1))
+ax.add_patch(Rectangle((0.05, 5.075), 0.90, 0.85, fill=True, facecolor='lime'))#, edgecolor='black', lw=1))
+ax.add_patch(Rectangle((1.05, 5.075), 0.90, 0.85, fill=True, facecolor='lime'))#, edgecolor='black', lw=1))
+ax.add_patch(Rectangle((2.05, 5.075), 0.90, 0.85, fill=True, facecolor='red'))#, edgecolor='black', lw=1))
+ax.add_patch(Rectangle((0.05, 6.075), 0.90, 0.85, fill=True, facecolor='lime'))#, edgecolor='black', lw=1))
+ax.add_patch(Rectangle((1.05, 6.075), 0.90, 0.85, fill=True, facecolor='lime'))#, edgecolor='black', lw=1))
+ax.add_patch(Rectangle((2.05, 6.075), 0.90, 0.85, fill=True, facecolor='red'))#, edgecolor='black', lw=1))
+
+ax.add_patch(Rectangle((0.05, 4.075), 0.90, 0.85, fill=True, facecolor='magenta', alpha=0.2))#, edgecolor='black', lw=1))
+ax.add_patch(Rectangle((1.05, 4.075), 0.90, 0.85, fill=True, facecolor='magenta', alpha=0.5))#, edgecolor='black', lw=1))
+ax.add_patch(Rectangle((2.05, 4.075), 0.90, 0.85, fill=True, facecolor='magenta'))#, edgecolor='black', lw=1))
+
+## spearman correlation of 3rd class passenger
+plt.subplot(1, 2, 2)
+
+data = []
+
+test = df.loc[(df.Age_gauss < 21) & (df.Pclass == '3rd')].values.tolist()
+
+guard3 = []
+
+for i in test:
+    
+    tmp = {}
+    tmp2 = {}
+    
+    for j in df[['Ticket', 'Age_gauss', 'Sex', 'Survived']].values.tolist():
+                   
+        if i[6] == j[0] and i[5] > 0 and j[1] > i[15]:
+            
+            i.append(j[1])
+            tmp[j[1]] = j[2]
+            tmp2[j[1]] = j[3]
+    
+    
+    if len(i) > 17 and i[5] == 1:
+        
+        l = max(i[17:])
+        
+        guard3.append([i[0], tmp2[l]])
+    
+    elif len(i) > 17 and i[5] == 2:
+        
+        l = max(i[17:])
+        i.remove(l)
+        
+        ## fix incomplete dataset
+        if len(i) > 17:
+            
+            s = max(i[17:])
+        
+        else:
+            
+            s = l
+
+        guard3.append([i[0], max([tmp2[l], tmp2[s]])])
+
+
+ax = sns.heatmap(
+    
+    pd.DataFrame(guard3).corr(method='spearman'),
+    annot=True,
+    fmt=".1f",
+    annot_kws={"size":45},
+    cmap='viridis',
+    cbar=False,
+    
+    )
+
+ax.set_xticklabels(['ward survived', 'guardian survived'], rotation=0)
+ax.set_yticklabels(['ward survived', 'guardian survived'], rotation=90)
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
+plt.title('SPEARMAN CORRELATION\n3rd class surviver', fontsize=20, pad=15, weight='bold')
+
+
+# space between subplots
+# plt.subplots_adjust(hspace = 0.5) 
+# plt.subplots_adjust(wspace=0.25)
+
+# set the DPI to 300
+plt.figure(dpi=300)
+
+plt.show()
+
+
+# 3rd class female correlation with relatives
+# creating heatmaps
+plt.figure(figsize=(14, 4))
 
 ## Percentage Surviver: Survived vs. Sex
 plt.subplot(1, 3, 1)
@@ -1247,16 +1296,17 @@ ax = sns.heatmap(
     pd.DataFrame(female3rd_normalized).corr(method='spearman'),
     annot=True,
     fmt=".1f",
-    annot_kws={"size":20},
+    annot_kws={"size":30},
     cmap='viridis',
+    cbar = False,
     
     )
 
 ax.set_xticklabels(['survived', '#Siblings/\nSpouse', '#Parents/\nChildren'], rotation=0)
 ax.set_yticklabels(['survived', '#Siblings/\nSpouse', '#Parents/\nChildren'], rotation=0)
-plt.xticks(fontsize=12)
-plt.yticks(fontsize=12)
-plt.title('1ST CLASS FEMALE SURVIVER\nvs. #Relationships', fontsize=14, pad=15, weight='bold')
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
+plt.title('1ST FEMALE SURVIVER\nvs. #Relationships', fontsize=20, pad=15, weight='bold')
 
 
 plt.subplot(1, 3, 2)
@@ -1273,15 +1323,16 @@ ax = sns.heatmap(
     pd.DataFrame(female3rd_normalized).corr(method='spearman'),
     annot=True,
     fmt=".1f",
-    annot_kws={"size":20},
+    annot_kws={"size":30},
     cmap='viridis',
     yticklabels=False,
+    cbar = False,
     
     )
 
 ax.set_xticklabels(['survived', '#Siblings/\nSpouse', '#Parents/\nChildren'], rotation=0)
-plt.xticks(fontsize=12)
-plt.title('2ND CLASS FEMALE SURVIVER\nvs. #Relationships', fontsize=14, pad=15, weight='bold')
+plt.xticks(fontsize=18)
+plt.title('2ND FEMALE SURVIVER\nvs. #Relationships', fontsize=20, pad=15, weight='bold')
 
 
 plt.subplot(1, 3, 3)
@@ -1298,17 +1349,19 @@ ax = sns.heatmap(
     pd.DataFrame(female3rd_normalized).corr(method='spearman'),
     annot=True,
     fmt=".1f",
-    annot_kws={"size":20},
+    annot_kws={"size":30},
     cmap='viridis',
     yticklabels=False,
+    cbar = False,
     
     )
 
 ax.set_xticklabels(['survived', '#Siblings/\nSpouse', '#Parents/\nChildren'], rotation=0)
-plt.xticks(fontsize=12)
-plt.title('3RD CLASS FEMALE SURVIVER\nvs. #Relationships', fontsize=14, pad=15, weight='bold')
+plt.xticks(fontsize=18)
+plt.title('3RD FEMALE SURVIVER\nvs. #Relationships', fontsize=20, pad=15, weight='bold')
 
-ax.add_patch(Rectangle((0.01, 0.99), 1, 2, fill=False, edgecolor='red', lw=5))
+ax.add_patch(Rectangle((0.05, 1.05), 0.9, 1.9, fill=False, edgecolor='red', lw=8))
+ax.add_patch(Rectangle((1.05, 0.05), 1.9, 0.9, fill=False, edgecolor='red', lw=8))
 
 # space between subplots
 # plt.subplots_adjust(hspace = 0.01) 
